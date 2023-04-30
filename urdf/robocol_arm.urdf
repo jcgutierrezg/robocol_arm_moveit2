@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<robot name="robocol_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- robocol_link0 -->
+  <link name="robocol_link0">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/visual/v2_link0.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="black_metal">
+        <color rgba="0.1 0.1 0.1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/collision/v2_link0.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- robocol_joint1 -->
+  <joint name="robocol_joint1" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
+    <origin xyz="0 0 0.14" rpy="0 0 0"/>
+    <parent link="robocol_link0"/>
+    <child link="robocol_link1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="87" lower="-2.09" upper="2.09" velocity="2.3925"/>
+  </joint>
+  <!-- robocol_link1 -->
+  <link name="robocol_link1">
+    <visual>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/visual/v2_link1.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/collision/v2_link1.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- robocol_joint2 -->
+  <joint name="robocol_joint2" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.7628" soft_upper_limit="2.7628"/>
+    <parent link="robocol_link1"/>
+    <child link="robocol_link2"/>
+    <origin xyz="0.074 -0.055 0.12" rpy="0 -1.57 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="87" lower="-2.75" upper="2.75" velocity="2.3925"/>
+  </joint>
+  <!-- robocol_link2 -->
+  <link name="robocol_link2">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/visual/v2_link2.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="black_metal">
+        <color rgba="0.1 0.1 0.1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/collision/v2_link2.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- robocol_joint3 -->
+  <joint name="robocol_joint3" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
+    <parent link="robocol_link2"/>
+    <child link="robocol_link3"/>
+    <origin xyz="0.25 0 0" rpy="0 1.57 0"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="87" lower="-2.87" upper="2.76" velocity="2.3925"/>
+  </joint>
+  <!-- robocol_link3 -->
+  <link name="robocol_link3">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/visual/v2_link3.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/collision/v2_link3.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- robocol_joint4 -->
+  <joint name="robocol_joint4" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-3.0718" soft_upper_limit="2.97"/>
+    <parent link="robocol_link3"/>
+    <child link="robocol_link4"/>
+    <origin xyz="-0.005 0.055 0.15" rpy="0 0 -1.57"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="87" lower="-2.97" upper="2.97" velocity="2.3925"/>
+  </joint>
+  <!-- robocol_link4 -->
+  <link name="robocol_link4">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/visual/v2_link4.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="black_metal">
+        <color rgba="0.1 0.1 0.1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/collision/v2_link4.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- robocol_joint5 -->
+  <joint name="robocol_joint5" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
+    <parent link="robocol_link4"/>
+    <child link="robocol_link5"/>
+    <origin xyz="0.042 0.004 0.153" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="12" lower="-2.39" upper="2.7" velocity="2.8710"/>
+  </joint>
+  <!-- robocol_link5 -->
+  <link name="robocol_link5">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/visual/v2_link5.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/collision/v2_link5.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- robocol_joint6 -->
+  <joint name="robocol_joint6" type="revolute">
+    <origin xyz="-0.027 0.014 0.141" rpy="0 0 0"/>
+    <parent link="robocol_link5"/>
+    <child link="robocol_hand"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="12" lower="-2.97" upper="2.97" velocity="2.8710"/>
+  </joint>
+  <!-- robocol_hand -->
+  <link name="robocol_hand">
+    <visual>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/visual/v2_hand.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+      <material name="black_metal">
+        <color rgba="0.1 0.1 0.1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://robocol_arm_moveit2/meshes/collision/v2_hand.stl" scale="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+  </link>
+</robot>
