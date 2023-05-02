@@ -119,7 +119,7 @@ int main(int argc, char * argv[])
   } else {
     RCLCPP_ERROR(logger, "Planing failed!");
   }
-
+  RCLCPP_INFO(logger, "---------------------------------------");
   // // Set a target Pose
   // RCLCPP_INFO(logger, "Setting target pose...");
   // auto const target_pose_3 = []{

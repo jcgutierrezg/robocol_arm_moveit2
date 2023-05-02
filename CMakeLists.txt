@@ -24,7 +24,7 @@ target_compile_features(main_node PUBLIC c_std_99 cxx_std_17)
 target_compile_features(planning_test PUBLIC c_std_99 cxx_std_17)
 
 # It includes the necessary headers and libraries and their dependencies to be correctly found by the project. It will also ensure that the include directories of all dependencies are ordered correctly when using overlay workspaces.
-ament_target_dependencies(main_node "rclcpp")
+ament_target_dependencies(main_node moveit_ros_planning_interface "rclcpp")
 ament_target_dependencies(planning_test "moveit_ros_planning_interface" "rclcpp")
 
 # Install executables
