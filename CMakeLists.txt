@@ -10,6 +10,8 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 # Add your nodes
 add_executable(main_node src/main_node.cpp)
@@ -24,8 +26,8 @@ target_compile_features(main_node PUBLIC c_std_99 cxx_std_17)
 target_compile_features(planning_test PUBLIC c_std_99 cxx_std_17)
 
 # It includes the necessary headers and libraries and their dependencies to be correctly found by the project. It will also ensure that the include directories of all dependencies are ordered correctly when using overlay workspaces.
-ament_target_dependencies(main_node moveit_ros_planning_interface "rclcpp")
-ament_target_dependencies(planning_test "moveit_ros_planning_interface" "rclcpp")
+ament_target_dependencies(main_node moveit_ros_planning_interface rclcpp std_msgs)
+ament_target_dependencies(planning_test moveit_ros_planning_interface rclcpp std_msgs geometry_msgs)
 
 # Install executables
 install(TARGETS main_node DESTINATION lib/${PROJECT_NAME})
