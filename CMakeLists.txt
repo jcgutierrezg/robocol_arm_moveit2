@@ -12,26 +12,59 @@ find_package(moveit_ros_planning_interface REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(trajectory_msgs REQUIRED)
+find_package(moveit_visual_tools REQUIRED)
+find_package(moveit_core REQUIRED)
 
 # Add your nodes
 add_executable(main_node src/main_node.cpp)
 add_executable(planning_test src/planning_test.cpp)
+add_executable(test_node src/test_node.cpp)
+add_executable(plan_2_arm src/plan_2_arm.cpp)
 
 # This adds all files in the folder ${CMAKE_CURRENT_SOURCE_DIR}/include to the public interface during build time and all files in the include folder (relative to ${CMAKE_INSTALL_DIR}) when being installed.
 target_include_directories(main_node PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 target_include_directories(planning_test PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_include_directories(test_node PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_include_directories(plan_2_arm PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 
 # Specification to indicate that the package requires C99 and C++17
 target_compile_features(main_node PUBLIC c_std_99 cxx_std_17)
 target_compile_features(planning_test PUBLIC c_std_99 cxx_std_17)
+target_compile_features(test_node PUBLIC c_std_99 cxx_std_17)
+target_compile_features(plan_2_arm PUBLIC c_std_99 cxx_std_17)
 
 # It includes the necessary headers and libraries and their dependencies to be correctly found by the project. It will also ensure that the include directories of all dependencies are ordered correctly when using overlay workspaces.
 ament_target_dependencies(main_node moveit_ros_planning_interface rclcpp std_msgs)
-ament_target_dependencies(planning_test moveit_ros_planning_interface rclcpp std_msgs geometry_msgs)
+ament_target_dependencies(
+  planning_test
+  rclcpp
+  std_msgs
+  geometry_msgs
+  trajectory_msgs
+  moveit_ros_planning_interface
+  moveit_visual_tools
+)
+ament_target_dependencies(
+  test_node
+  rclcpp
+  moveit_ros_planning_interface
+  moveit_visual_tools
+  moveit_core
+)
+ament_target_dependencies(
+  plan_2_arm
+  rclcpp
+  moveit_ros_planning_interface
+  moveit_visual_tools
+  moveit_core
+)
 
 # Install executables
 install(TARGETS main_node DESTINATION lib/${PROJECT_NAME})
 install(TARGETS planning_test DESTINATION lib/${PROJECT_NAME})
+install(TARGETS test_node DESTINATION lib/${PROJECT_NAME})
+install(TARGETS plan_2_arm DESTINATION lib/${PROJECT_NAME})
 install(DIRECTORY meshes urdf DESTINATION share/${PROJECT_NAME})
 
 # Files for testing purposes
