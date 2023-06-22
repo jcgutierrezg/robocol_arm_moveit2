@@ -14,7 +14,7 @@ class Plan2ArmNode : public rclcpp::Node {
 	public :
 		Plan2ArmNode() : Node("plan_2_arm_node") {
 			// Create a ROS Subscription to robocol/arm_desired_pose with geometry_msgs::msg::Pose type message
-			auto display_planned_path = "display_planned_path";
+			auto display_planned_path = "/display_planned_path";
 			RCLCPP_INFO(this->get_logger(), "Subscribing to %s topic...", display_planned_path);
 			display_subscription_ = this->create_subscription<moveit_msgs::msg::DisplayTrajectory>(
 				display_planned_path,
@@ -57,8 +57,8 @@ class Plan2ArmNode : public rclcpp::Node {
 				auto pose = geometry_msgs::msg::Pose();
 				if (actual_trajectory == 0) {
 					pose.position.x = (pos[0]*180)/(3.14159);
-					pose.position.y = (pos[1]*180)/(3.14159);
-					pose.position.z = (pos[2]*180)/(3.14159);
+					pose.position.y = -(pos[1]*180)/(3.14159);
+					pose.position.z = -(pos[2]*180)/(3.14159);
 					pose.orientation.x = (pos[3]*180)/(3.14159);
 					pose.orientation.y = (pos[4]*180)/(3.14159);
 					pose.orientation.z = (pos[5]*180)/(3.14159);
@@ -69,8 +69,8 @@ class Plan2ArmNode : public rclcpp::Node {
 					RCLCPP_INFO(this->get_logger(), "pos: '%f'", last_pos[0]);
 					RCLCPP_INFO(this->get_logger(), "minus: '%f'", pos[0] - last_pos[0]);
 					pose.position.x = ((pos[0] - last_pos[0])*180)/(3.14159);
-					pose.position.y = ((pos[1] - last_pos[1])*180)/(3.14159);
-					pose.position.z = ((pos[2] - last_pos[2])*180)/(3.14159);
+					pose.position.y = -((pos[1] - last_pos[1])*180)/(3.14159);
+					pose.position.z = -((pos[2] - last_pos[2])*180)/(3.14159);
 					pose.orientation.x = ((pos[3] - last_pos[3])*180)/(3.14159);
 					pose.orientation.y = ((pos[4] - last_pos[4])*180)/(3.14159);
 					pose.orientation.z = ((pos[5] - last_pos[5])*180)/(3.14159);

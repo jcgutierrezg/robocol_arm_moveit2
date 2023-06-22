@@ -31,6 +31,10 @@ class PlanningNode : public rclcpp::Node {
       RCLCPP_INFO(logger, "Creating move group interface...");
       move_group_ptr_ = new MoveGroupInterface(move_group_node, "robocol_arm_group");
       RCLCPP_INFO(logger, "Move group interface created.");
+
+      move_group_ptr_->setPlannerId("PRMkConfigDefault");
+      move_group_ptr_->setMaxVelocityScalingFactor(1.0);
+      move_group_ptr_->setMaxAccelerationScalingFactor(1.0);
     }
 
     ~PlanningNode() {
