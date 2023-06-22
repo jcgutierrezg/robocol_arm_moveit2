@@ -47,6 +47,8 @@ class PlanningNode : public rclcpp::Node {
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr plan_subscription_;
     geometry_msgs::msg::Pose target_pose;
     moveit::planning_interface::MoveGroupInterface *move_group_ptr_;
+    moveit::planning_interface::MoveGroupInterface::Plan planned_path;
+    bool ok;
 
     void set_action(const std_msgs::msg::String::SharedPtr msg) {
       RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
@@ -55,22 +57,15 @@ class PlanningNode : public rclcpp::Node {
       if (msg->data.c_str() == plan_str) {
         // Create a plan to that target pose
         RCLCPP_INFO(this->get_logger(), "Creating plan...");
-        moveit::planning_interface::MoveGroupInterface::Plan msg;
-        auto const ok = static_cast<bool>(move_group_ptr_->plan(msg));
-        auto const [success, plan] = std::make_pair(ok, msg);
+        ok = static_cast<bool>(move_group_ptr_->plan(planned_path));
       } else if(msg->data.c_str() == execute_str) {
-        // Create a plan to that target pose
-        RCLCPP_INFO(this->get_logger(), "Creating plan...");
-        moveit::planning_interface::MoveGroupInterface::Plan msg;
-        auto const ok = static_cast<bool>(move_group_ptr_->plan(msg));
-        auto const [success, plan] = std::make_pair(ok, msg);
         // Execute the plan
-        RCLCPP_INFO(this->get_logger(), "Executing plan...");
-        if(success) {
-          move_group_ptr_->execute(plan);
+        if(ok) {
+          RCLCPP_INFO(this->get_logger(), "Executing plan...");
+          move_group_ptr_->execute(planned_path);
           RCLCPP_INFO(this->get_logger(), "Plan executed.");
         } else {
-          RCLCPP_ERROR(this->get_logger(), "Planing failed!");
+          RCLCPP_ERROR(this->get_logger(), "Can't execute because planing failed!");
         }
       }
     }
