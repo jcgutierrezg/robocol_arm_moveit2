@@ -8,6 +8,8 @@
 // MoveIt libraries
 #include <moveit/move_group_interface/move_group_interface.h>
 using moveit::planning_interface::MoveGroupInterface;
+#include <moveit_visual_tools/moveit_visual_tools.h>
+#include <moveit/moveit_cpp/moveit_cpp.h>
 // Placeholders
 using std::placeholders::_1;
 
@@ -32,9 +34,10 @@ class PlanningNode : public rclcpp::Node {
       move_group_ptr_ = new MoveGroupInterface(move_group_node, "robocol_arm_group");
       RCLCPP_INFO(logger, "Move group interface created.");
 
-      move_group_ptr_->setPlannerId("PRMkConfigDefault");
+      move_group_ptr_->setPlannerId("RRTConnectkConfigDefault");
       move_group_ptr_->setMaxVelocityScalingFactor(1.0);
       move_group_ptr_->setMaxAccelerationScalingFactor(1.0);
+      //move_group_ptr_->setPlanningTime(10.0);
     }
 
     ~PlanningNode() {
@@ -45,7 +48,10 @@ class PlanningNode : public rclcpp::Node {
     std::shared_ptr<rclcpp::Node> move_group_node;
     rclcpp::Subscription<geometry_msgs::msg::Pose>::SharedPtr pose_subscription_;
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr plan_subscription_;
+
     geometry_msgs::msg::Pose target_pose;
+    geometry_msgs::msg::Pose previous_planned_pose;
+
     moveit::planning_interface::MoveGroupInterface *move_group_ptr_;
     moveit::planning_interface::MoveGroupInterface::Plan planned_path;
     bool ok;
@@ -58,12 +64,17 @@ class PlanningNode : public rclcpp::Node {
         // Create a plan to that target pose
         RCLCPP_INFO(this->get_logger(), "Creating plan...");
         ok = static_cast<bool>(move_group_ptr_->plan(planned_path));
+        if(ok) {
+          previous_planned_pose = target_pose;
+        }
       } else if(msg->data.c_str() == execute_str) {
         // Execute the plan
         if(ok) {
           RCLCPP_INFO(this->get_logger(), "Executing plan...");
           move_group_ptr_->execute(planned_path);
           RCLCPP_INFO(this->get_logger(), "Plan executed.");
+          //move_group_ptr_->setStartState(move_group_ptr->getCurrentState());
+          move_group_ptr_->setStartStateToCurrentState();
         } else {
           RCLCPP_ERROR(this->get_logger(), "Can't execute because planing failed!");
         }

@@ -56,12 +56,19 @@ class Plan2ArmNode : public rclcpp::Node {
 				RCLCPP_INFO(this->get_logger(), "t%d: j0: %f, j1: %f, j2: %f, j3: %f, j4: %f, j5: %f", actual_trajectory, pos[0], pos[1], pos[2], pos[3], pos[4], pos[5]);
 				auto pose = geometry_msgs::msg::Pose();
 				if (actual_trajectory == 0) {
-					pose.position.x = (pos[0]*180)/(3.14159);
-					pose.position.y = -(pos[1]*180)/(3.14159);
-					pose.position.z = -(pos[2]*180)/(3.14159);
-					pose.orientation.x = (pos[3]*180)/(3.14159);
-					pose.orientation.y = (pos[4]*180)/(3.14159);
-					pose.orientation.z = (pos[5]*180)/(3.14159);
+					//pose.position.x = (pos[0]*180)/(3.14159);
+					//pose.position.y = -(pos[1]*180)/(3.14159);
+					//pose.position.z = -(pos[2]*180)/(3.14159);
+					//pose.orientation.x = (pos[3]*180)/(3.14159);
+					//pose.orientation.y = (pos[4]*180)/(3.14159);
+					//pose.orientation.z = (pos[5]*180)/(3.14159);
+					//pose.orientation.w = 0.0;
+					pose.position.x = 0.0;
+					pose.position.y = 0.0;
+					pose.position.z = 0.0;
+					pose.orientation.x = 0.0;
+					pose.orientation.y = 0.0;
+					pose.orientation.z = 0.0;
 					pose.orientation.w = 0.0;
 				} else {
 					auto last_pos = joint_trajectory.points[actual_trajectory-1].positions;
